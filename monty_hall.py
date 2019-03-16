@@ -10,32 +10,32 @@ loss = 0
 for guess in range(iterations):
     #setup the guess
     doors = ['a','b','c']
-    contestant = random.choice(doors)
-    prize = random.choice(doors)
-    result = [contestant]
+    contestant_choice = random.choice(doors)
+    prize_door = random.choice(doors)
+    result = [contestant_choice]
 
-    #announcer removes a door randomly, can't be contestant or prize
-    removal = contestant
-    while(removal == contestant or removal == prize):
-        removal = random.choice(doors)
+    #announcer removes a door randomly, can't be contestant_choice or prize_door
+    to_remove = contestant_choice
+    while(to_remove == contestant_choice or to_remove == prize_door):
+        to_remove = random.choice(doors)
 
-    doors.remove(removal)
+    doors.remove(to_remove)
     
 
-    #contestant switches to the 'other' door
-    doors.remove(contestant)
+    #contestant_choice switches to the 'other' door
+    doors.remove(contestant_choice)
 
     #both of these work!
-    contestant = doors[0]
-    #contestant = random.choice(doors)
+    contestant_choice = doors[0]
+    #contestant_choice = random.choice(doors)
 
 
     #output results
-    result.append(contestant)
+    result.append(contestant_choice)
     results.append(result)
 
     #calc win/loss
-    if contestant == prize:
+    if contestant_choice == prize_door:
         win+=1
     else:
         loss+=1
