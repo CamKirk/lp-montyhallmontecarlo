@@ -1,8 +1,10 @@
 import random
 import json
 
-results = []
-iterations = 20
+from monty_print import print_values
+
+results_list = []
+iterations = 5000
 
 win = 0
 loss = 0
@@ -12,7 +14,7 @@ for guess in range(iterations):
     doors = ['a','b','c']
     contestant_choice = random.choice(doors)
     prize_door = random.choice(doors)
-    result = [contestant_choice]
+    trial = [contestant_choice]
 
     #announcer removes a door randomly, can't be contestant_choice or prize_door
     to_remove = contestant_choice
@@ -30,43 +32,17 @@ for guess in range(iterations):
     #contestant_choice = random.choice(doors)
 
 
-    #output results
-    result.append(contestant_choice)
-    results.append(result)
-
+    #output results_list
+    trial.append(contestant_choice)
+    
     #calc win/loss
     if contestant_choice == prize_door:
-        win+=1
+        trial.append(True)
     else:
-        loss+=1
+        trial.append(False)
+        
 
-prior = {
-    "a": 0,
-    "b": 0,
-    "c": 0
-}
+    results_list.append(trial)
 
-posterior = {
-    "a": {
-        "a": 0,
-        "b": 0,
-        "c": 0
-    },
-    "b": {
-        "a": 0,
-        "b": 0,
-        "c": 0
-    },
-    "c": {
-        "a": 0,
-        "b": 0,
-        "c": 0
-    }
-}
-for i,j in results:
-    prior[i]+=1
-    posterior[i][j]+=1
+print_values(results_list)
 
-print(json.dumps(prior, indent=1))
-print(json.dumps(posterior, indent=1))
-print((win, loss, win/(win+loss)))
