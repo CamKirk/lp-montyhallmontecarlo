@@ -26,10 +26,8 @@ for guess in range(iterations):
 
     #contestant_choice switches to the 'other' door
     doors.remove(contestant_choice)
-
-    #both of these work!
     contestant_choice = doors[0]
-    #contestant_choice = random.choice(doors)
+
 
 
     #output results_list
