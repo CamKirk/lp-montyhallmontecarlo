@@ -35,9 +35,9 @@ for guess in range(iterations):
     
     #calc win/loss
     if contestant_choice == prize_door:
-        trial.append(True)
+        trial.append(1)
     else:
-        trial.append(False)
+        trial.append(0)
         
 
     results_list.append(trial)

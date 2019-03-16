@@ -15,30 +15,30 @@ def print_values(results):
 
 
 
-    # Print Wins, Losses, and Winning Rate
 
-    win_series = df.groupby(["Result"]).count()["Posterior"]
-
-    print(f"""
-        Wins:{win_series[1]} 
-        Losses: {win_series[0]} 
-        Winrate: {win_series[1]/(win_series[1]+win_series[0])}
-        """)
-
-
-
-    # Print distribution of Priors
+    # Print distribution of Priors and Posteriors
 
     print("""
-    Distribution of Prior Selections
+    Distribution of Prior Selections p(A)
     """)
     print(df.groupby("Prior").count()["Result"])
 
     print("""
-    Distribution of Posterior Selections.
-    Note, this is not the distribution of WINNING,
+    Distribution of Posterior Selections 
+    Note, this is NOT the distribution of WINNING,
     only the rate at which each value is selected
     """)
     print(df.groupby(["Prior", "Posterior"]).count()["Result"])
 
+
+
+    # Print Wins, Losses, and Winning Rate
+
+    winrate_series = df.groupby(["Result"]).count()["Posterior"]
+
+    print(f"""
+        Wins:{winrate_series[1]} 
+        Losses: {winrate_series[0]} 
+        Winrate: {winrate_series[1]/(winrate_series[1]+winrate_series[0])}
+        """)
     # print(df)
