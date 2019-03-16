@@ -28,7 +28,7 @@ def print_values(results):
     print(prior_group.count()["Result"])
 
     print("""
-    Distribution of Posterior Selections 
+    Distribution of Posterior Selections p(A|B)
     Note, this is NOT the distribution of WINNING,
     only the rate at which each value is selected
     """)
@@ -38,7 +38,9 @@ def print_values(results):
 
     # Print Wins, Losses, and Winning Rate
 
-    print("Data on wins")
+    print("""
+    Data on wins
+    """)
 
     winrate_series = df.groupby(["Result"]).count()["Posterior"]
 
@@ -53,21 +55,27 @@ def print_values(results):
     print("""
     Wins by Prior Selection
     """)
-
-    prior_win_df = prior_group.count().join(prior_group.sum(), rsuffix="win")
-    prior_win_df.rename(inplace=True, columns={"Result":"Trials", "Resultwin":"Wins"})
-    prior_win_df = prior_win_df[["Trials","Wins"]]
-    prior_win_df["Winrate"] = prior_win_df["Wins"]/prior_win_df["Trials"]
-    print(prior_win_df)
+    
+    print(calculate_winrates(prior_group))
 
     # Wins by Posterior
 
     print("""
     Wins by Posterior Selection
     """)
+    
+    print(calculate_winrates(posterior_group))
 
-    posterior_win_df = posterior_group.count().join(posterior_group.sum(), rsuffix="win")
-    posterior_win_df.rename(inplace=True, columns={"Result":"Trials", "Resultwin":"Wins"})
-    posterior_win_df = posterior_win_df[["Trials","Wins"]]
-    posterior_win_df["Winrate"] = posterior_win_df["Wins"]/posterior_win_df["Trials"]
-    print(posterior_win_df)
+def calculate_winrates(groupby_structure):
+    """Generates Winrate column for prior and posterior group
+    
+    Args:
+        groupby_structure(pandas.groupby)
+    """
+
+    win_df = groupby_structure.count().join(groupby_structure.sum(), rsuffix="win")
+    win_df.rename(inplace=True, columns={"Result":"Trials", "Resultwin":"Wins"})
+    win_df = win_df[["Trials","Wins"]]
+    win_df["Winrate"] = win_df["Wins"]/win_df["Trials"]
+
+    return win_df
