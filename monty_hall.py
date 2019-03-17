@@ -6,8 +6,6 @@ from monty_print import print_values
 results_list = []
 iterations = 5000
 
-win = 0
-loss = 0
 
 for guess in range(iterations):
     #setup the guess
